@@ -1,0 +1,137 @@
+<header>
+    <h1>Smart JSA Terminal</h1>
+    <p>Orbital Field Services • Precision Safety Routing</p>
+</header>
+
+<div class="container">
+    
+    <div class="card">
+        <h2>1. Deployment & Logistics <span class="badge auto">Auto-Filtered</span></h2>
+        <div class="form-grid">
+            <div class="form-group half-width">
+                <label>JSA Execution Date</label>
+                <input type="text" id="live-date-stamp" value="Loading..." readonly style="background-color: #f1f5f9; font-weight: bold; border-color: #cbd5e1;">
+            </div>
+            <div class="form-group half-width">
+                <label for="work-order">Work Order / Project ID</label>
+                <input type="text" id="work-order" placeholder="Optional for draft, required for field submission">
+            </div>
+            
+            <div class="form-group half-width">
+                <label for="client">Telecom / Power Parent Client</label>
+                <select id="client">
+                    <option value="">-- Choose Client --</option>
+                    <option value="Frontier">Frontier Communications</option>
+                    <option value="Comcast">Comcast / Xfinity</option>
+                    <option value="FirstEnergy">FirstEnergy (Operating Companies)</option>
+                    <option value="AEP">AEP (American Electric Power)</option>
+                </select>
+            </div>
+            
+            <div class="form-group half-width" id="subsidiary-wrapper" style="display: none;">
+                <label for="subsidiary" style="color: var(--orbital-gold);">Specific Regional Operating Company</label>
+                <select id="subsidiary" style="border: 1px solid var(--orbital-gold); background-color: #fffbeb;">
+                    <option value="">-- Select OpCo --</option>
+                </select>
+            </div>
+
+            <div class="form-group quarter-width">
+                <label for="state">Target State</label>
+                <select id="state">
+                    <option value="">-- State --</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="OH">Ohio</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="MD">Maryland</option>
+                </select>
+            </div>
+            <div class="form-group quarter-width">
+                <label for="county">Target County</label>
+                <select id="county">
+                    <option value="">-- County --</option>
+                </select>
+            </div>
+            <div class="form-group full-width">
+                <label for="site-details">Specific Location Info / Pole Numbers</label>
+                <input type="text" id="site-details" placeholder="Route info, coordinates, or target spans...">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>2. Equipment Dielectric Gatekeeper <span class="badge required">Safety Lockout</span></h2>
+        <div id="gatekeeper-feedback" class="gatekeeper-alert"></div>
+        <div class="form-grid">
+            <div class="form-group half-width">
+                <label for="hastings-date">Hastings Measuring Rod Test Date</label>
+                <input type="date" id="hastings-date">
+            </div>
+            <div class="form-group half-width">
+                <label for="gloves-date">Class 3 Rubber Gloves Test Date</label>
+                <input type="date" id="gloves-date">
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="check-flex-container">
+            <h2>3. Active Site Hazards <span class="badge required">Tap All That Apply</span></h2>
+            <button class="macro-btn" type="button" onclick="toggleAllBoxes('hazard-zone', false)">Clear All</button>
+        </div>
+        <div class="checklist-grid" id="hazard-zone">
+            <label class="fast-check"><input type="checkbox">Vehicular Roadside Traffic</label>
+            <label class="fast-check"><input type="checkbox">Overhead Primary Electrical Lines</label>
+            <label class="fast-check"><input type="checkbox">Foreign Voltage Risk on Telecom Strands</label>
+            <label class="fast-check"><input type="checkbox">Slips, Trips & Hidden Ditch Drop-offs</label>
+            <label class="fast-check"><input type="checkbox">Uneven / Heavy Gradient Terrain</label>
+            <label class="fast-check"><input type="checkbox">Aggressive Animals / Target Insects</label>
+            <label class="fast-check"><input type="checkbox">Adverse Weather Conditions</label>
+            <label class="fast-check"><input type="checkbox">Dense Undergrowth / Poison Ivy</label>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="check-flex-container">
+            <h2>4. Deployed PPE & Safety Gear <span class="badge auto">Recommended Verification</span></h2>
+            <button class="macro-btn" type="button" onclick="toggleAllBoxes('ppe-zone', true)">All Standard PPE On</button>
+        </div>
+        <div class="checklist-grid" id="ppe-zone">
+            <label class="fast-check"><input type="checkbox">Class 3 High-Visibility Vest/Coat</label>
+            <label class="fast-check"><input type="checkbox">Protective Hard Hat</label>
+            <label class="fast-check"><input type="checkbox">EH-Rated Safety Boots</label>
+            <label class="fast-check"><input type="checkbox">Safety Glasses (Z87+ Rated)</label>
+            <label class="fast-check"><input type="checkbox">Foreign Voltage Detector (FVD)</label>
+            <label class="fast-check"><input type="checkbox">Truck Hood Safety Cone Positioned</label>
+            <label class="fast-check"><input type="checkbox">Truck First Aid Kit Present</label>
+            <label class="fast-check"><input type="checkbox">Leather Work Gloves Available</label>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>5. Task Target Matrix <span class="badge auto">Dynamic Routing</span></h2>
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label for="task-type">Primary Field Assignment</label>
+                <select id="task-type">
+                    <option value="">-- Select Field Scope (Optional) --</option>
+                    <option value="imaging">Utility Pole Imaging & Data Collection (Katapult Pro)</option>
+                    <option value="pci">PCI - Pole Condition Inspection & Structural Sounding</option>
+                    <option value="pai">PAI - Pole Attachment Inspection & Clearance Audit</option>
+                    <option value="telecom">Telecom Strand & Attachment Assessment</option>
+                    <option value="leveling">Ground Surveying & Base Line Leveling</option>
+                </select>
+            </div>
+        </div>
+        <div id="hazard-display-section" style="display: none; margin-top: 15px;">
+            <div class="control-plan-box">
+                <h3>Automated Site Control Plan Guidelines</h3>
+                <div id="control-plan-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-container">
+        <button id="submit-btn" class="btn-submit">Lock & Authorize Work Initialization</button>
+        <button id="pdf-btn" class="btn-pdf">Export Official PDF Record</button>
+    </div>
+</div>
