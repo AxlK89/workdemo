@@ -17,15 +17,15 @@
 <div class="container">
     
     <div class="card">
-        <h2>1. Deployment & Logistics <span class="badge auto">Auto-Filtered</span></h2>
+        <h2>1. Deployment & Logistics <span class="badge required">OSHA Compliance</span></h2>
         <div class="form-grid">
             <div class="form-group half-width">
-                <label>JSA Execution Date</label>
-                <input type="text" id="live-date-stamp" value="Loading..." readonly style="background-color: #f1f5f9; font-weight: bold; border-color: #cbd5e1;">
+                <label for="live-date-stamp">JSA Execution Date</label>
+                <input type="date" id="live-date-stamp">
             </div>
             <div class="form-group half-width">
                 <label for="work-order">Work Order / Project ID</label>
-                <input type="text" id="work-order" placeholder="Optional for draft, required for field submission">
+                <input type="text" id="work-order" placeholder="Required for field submission">
             </div>
             
             <div class="form-group half-width">
@@ -62,6 +62,26 @@
                     <option value="">-- County --</option>
                 </select>
             </div>
+            
+            <div class="form-group half-width">
+                <label for="weather-temp">Ambient Temperature / Heat Index</label>
+                <select id="weather-temp">
+                    <option value="">-- Select Temp Range --</option>
+                    <option value="Cold">Below 40°F (Cold Stress Risk)</option>
+                    <option value="Moderate">40°F to 85°F (Standard)</option>
+                    <option value="Hot">Above 85°F (Heat Stress Monitor / Fluids Required)</option>
+                </select>
+            </div>
+            <div class="form-group half-width">
+                <label for="weather-wind">Wind / Visibility Conditions</label>
+                <select id="weather-wind">
+                    <option value="">-- Select Conditions --</option>
+                    <option value="Clear">Calm / Clear Visibility</option>
+                    <option value="HighWinds">High Winds / Gusts (Watch Overhead Structures)</option>
+                    <option value="LowVis">Precipitation / Fog (High Traffic Risk)</option>
+                </select>
+            </div>
+
             <div class="form-group full-width">
                 <label for="site-details">Specific Location Info / Pole Numbers</label>
                 <input type="text" id="site-details" placeholder="Route info, coordinates, or target spans...">
@@ -144,6 +164,32 @@
             <div class="control-plan-box">
                 <h3>Automated Site Control Plan Guidelines</h3>
                 <div id="control-plan-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>6. Roster Sign-Off & Toolbox Briefing <span class="badge required">Acknowledgment</span></h2>
+        <p style="font-size: 0.75rem; color: #555; margin-bottom: 10px; line-height: 1.2;">
+            By entering initials below, the field crew certifies that a pre-job safety tailgate briefing was executed, site hazards were evaluated, and appropriate controls/PPE have been actively deployed in compliance with OSHA standards.
+        </p>
+        <div class="form-grid">
+            <div class="form-group half-width">
+                <label for="lead-tech">Lead Field Technician Name</label>
+                <input type="text" id="lead-tech" placeholder="First & Last Name">
+            </div>
+            <div class="form-group half-width">
+                <label for="lead-initials">Lead Initials (Sign-Off)</label>
+                <input type="text" id="lead-initials" placeholder="e.g. AB" maxlength="4" style="text-transform: uppercase;">
+            </div>
+            
+            <div class="form-group half-width" style="margin-top: 5px;">
+                <label for="partner-tech">Field Partner Name (Leave blank if solo)</label>
+                <input type="text" id="partner-tech" placeholder="First & Last Name">
+            </div>
+            <div class="form-group half-width" style="margin-top: 5px;">
+                <label for="partner-initials">Partner Initials</label>
+                <input type="text" id="partner-initials" placeholder="e.g. CD" maxlength="4" style="text-transform: uppercase;">
             </div>
         </div>
     </div>
