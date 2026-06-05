@@ -119,7 +119,7 @@
     </div>
 
     <div class="card">
-        <h2>5. Task Target Matrix <span class="badge auto">Dynamic Routing</span></h2>
+        <h2>5. Task Target Matrix & Field Findings <span class="badge auto">Dynamic Routing</span></h2>
         <div class="form-grid">
             <div class="form-group full-width">
                 <label for="task-type">Primary Field Assignment</label>
@@ -132,7 +132,14 @@
                     <option value="leveling">Ground Surveying & Base Line Leveling</option>
                 </select>
             </div>
+            
+            <div class="form-group full-width" style="margin-top: 10px;">
+                <label for="field-findings">Field Findings, Structural Notes, or Route Anomalies</label>
+                <textarea id="field-findings" rows="4" placeholder="Log any split poles, structural decay, visual violations, clearance issues, or environmental hazards here..."></textarea>
+                <div id="print-findings-view" class="print-only-block"></div>
+            </div>
         </div>
+        
         <div id="hazard-display-section" style="display: none; margin-top: 15px;">
             <div class="control-plan-box">
                 <h3>Automated Site Control Plan Guidelines</h3>

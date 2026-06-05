@@ -92,12 +92,28 @@ label {
     color: #444;
 }
 
-input[type="text"], input[type="date"], select {
+input[type="text"], input[type="date"], select, textarea {
     padding: 8px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
     font-size: 0.95rem;
     background-color: #fff;
+    font-family: inherit;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.print-only-block {
+    display: none;
+    white-space: pre-wrap;
+    border: 1px solid #000;
+    padding: 10px;
+    background: #fff;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    margin-top: 5px;
 }
 
 .check-flex-container {
@@ -232,8 +248,10 @@ button.btn-pdf {
     header p { color: #555 !important; }
     .container { max-width: 100%; margin: 0; padding: 0; }
     .card { box-shadow: none; border: 1px solid #000; margin-bottom: 10px; page-break-inside: avoid; }
-     Tar #subsidiary-wrapper { display: block !important; }
+    #subsidiary-wrapper { display: block !important; }
     input[type="text"] { border: none !important; padding: 0 !important; font-size: 1rem; }
+    textarea { display: none !important; }
+    .print-only-block { display: block !important; }
     .macro-btn, button, input[type="checkbox"], .badge { display: none !important; }
     .fast-check { background: #fff; border: none; padding: 2px 0; }
     .fast-check::before { content: "[✓] "; font-weight: bold; color: #000; }

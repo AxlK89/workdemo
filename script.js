@@ -1,4 +1,3 @@
-// Complete county matrix grouped by state
 const regionalMatrix = {
     "WV": [
         "Barbour County", "Berkeley County", "Boone County", "Braxton County", "Brooke County", 
@@ -58,7 +57,6 @@ const regionalMatrix = {
     ]
 };
 
-// Parent clients map out sub-groups
 const clientSubsidiaries = {
     "FirstEnergy": [
         "West Penn Power",
@@ -80,7 +78,6 @@ const clientSubsidiaries = {
     ]
 };
 
-// Automated Territory Mapping Database (Maps OpCo -> Primary Target State)
 const opcoTerritoryRouting = {
     "West Penn Power": "PA",
     "Penelec (Pennsylvania Electric Co)": "PA",
@@ -92,10 +89,7 @@ const opcoTerritoryRouting = {
     "Ohio Edison": "OH",
     "The Illuminating Company": "OH",
     "Toledo Edison": "OH",
-    "Potomac Edison": "MD", // Sets to primary, change manually if managing border extensions
-    "Jersey Central Power & Light (JCP&L)": "NJ", // Safely maps out state scope bounds
-    "Indiana Michigan Power": "IN",
-    "Kentucky Power": "KY"
+    "Potomac Edison": "MD"
 };
 
 const safetyMatrix = {
@@ -123,17 +117,17 @@ function initializeJsaTerminal() {
     const stateSelect = document.getElementById('state');
     const countySelect = document.getElementById('county');
     const taskSelect = document.getElementById('task-type');
+    const findingsInput = document.getElementById('field-findings');
+    const printFindingsView = document.getElementById('print-findings-view');
     const hastingsInput = document.getElementById('hastings-date');
     const glovesInput = document.getElementById('gloves-date');
     const submitBtn = document.getElementById('submit-btn');
     const pdfBtn = document.getElementById('pdf-btn');
 
-    // Populate Sub-companies when parent client changes
     if (clientSelect && subSelect && subWrapper) {
         clientSelect.addEventListener('change', () => {
             const selectedClient = clientSelect.value;
             subSelect.innerHTML = '<option value="">-- Select OpCo --</option>';
-            
             if (selectedClient && clientSubsidiaries[selectedClient]) {
                 subWrapper.style.display = "flex";
                 clientSubsidiaries[selectedClient].forEach(opco => {
@@ -144,29 +138,20 @@ function initializeJsaTerminal() {
                 });
             } else {
                 subWrapper.style.display = "none";
-                subSelect.innerHTML = '<option value="">-- Select OpCo --</option>';
             }
         });
     }
 
-    // AUTOMATED FIELD ROUTING: Triggered when precise Operating Company is selected
     if (subSelect && stateSelect) {
         subSelect.addEventListener('change', () => {
             const chosenOpco = subSelect.value;
             if (chosenOpco && opcoTerritoryRouting[chosenOpco]) {
-                const targetedState = opcoTerritoryRouting[chosenOpco];
-                
-                // Automatically set the State select box
-                stateSelect.value = targetedState;
-                
-                // Fire a manual event kick to force county list updates instantly
-                const event = new Event('change', { bubbles: true });
-                stateSelect.dispatchEvent(event);
+                stateSelect.value = opcoTerritoryRouting[chosenOpco];
+                stateSelect.dispatchEvent(new Event('change', { bubbles: true }));
             }
         });
     }
 
-    // Populate counties based on current state selection
     if (stateSelect && countySelect) {
         stateSelect.addEventListener('change', () => {
             const selectedState = stateSelect.value;
@@ -178,8 +163,6 @@ function initializeJsaTerminal() {
                     option.textContent = county; 
                     countySelect.appendChild(option);
                 });
-            } else {
-                countySelect.innerHTML = '<option value="">-- County --</option>';
             }
         });
     }
@@ -211,8 +194,7 @@ function initializeJsaTerminal() {
 
     function evaluateFormValidity() {
         if (!submitBtn) return;
-        const safetyPassed = evaluateEquipmentCompliance();
-        if (safetyPassed) {
+        if (evaluateEquipmentCompliance()) {
             submitBtn.disabled = false;
         } else { 
             submitBtn.disabled = true; 
@@ -231,16 +213,16 @@ function initializeJsaTerminal() {
         let message = "";
 
         if (hastingsInput?.value) {
-            const hastingsAgeMonths = (today.getFullYear() - new Date(hastingsInput.value).getFullYear()) * 12 + (today.getMonth() - new Date(hastingsInput.value).getMonth());
-            if (hastingsAgeMonths > 24) { 
+            const hastingsAge = (today.getFullYear() - new Date(hastingsInput.value).getFullYear()) * 12 + (today.getMonth() - new Date(hastingsInput.value).getMonth());
+            if (hastingsAge > 24) { 
                 isError = true; 
                 message += "🚨 CRITICAL LOCKOUT: Hastings Rod dielectric verification has expired (> 24 Mos).<br>"; 
             }
         }
 
         if (glovesInput?.value) {
-            const glovesAgeMonths = (today.getFullYear() - new Date(glovesInput.value).getFullYear()) * 12 + (today.getMonth() - new Date(glovesInput.value).getMonth());
-            if (glovesAgeMonths > 6) { 
+            const glovesAge = (today.getFullYear() - new Date(glovesInput.value).getFullYear()) * 12 + (today.getMonth() - new Date(glovesInput.value).getMonth());
+            if (glovesAge > 6) { 
                 isError = true; 
                 message += "🚨 CRITICAL LOCKOUT: Class 3 Rubber Gloves insulation line is out of spec (> 6 Mos)."; 
             }
@@ -264,6 +246,12 @@ function initializeJsaTerminal() {
 
     if (submitBtn && pdfBtn) {
         submitBtn.onclick = () => {
+            // Transfer findings textarea value to printable view block before locking elements
+            if (findingsInput && printFindingsView) {
+                printFindingsView.textContent = findingsInput.value.trim() || "No structural structural decay or field anomalies logged for this route dispatch segment.";
+                findingsInput.disabled = true;
+            }
+
             submitBtn.style.display = 'none';
             pdfBtn.style.display = 'block';
             alert("✓ DIGITAL JSA COMPLETED & LOCKED\n\nAuthorization Trace ID Code: ORB-" + Math.floor(100000 + Math.random() * 900000) + "\n\nForm is now frozen. Tap 'Export Official PDF Record' to generate your document.");
